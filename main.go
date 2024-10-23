@@ -24,7 +24,5 @@ func main() {
 			cmd.Callback()
 		}
 
-		fmt.Println()
-
 	}
 }

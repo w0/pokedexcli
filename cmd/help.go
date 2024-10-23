@@ -9,4 +9,6 @@ func commandHelp() {
 	for _, value := range commandMap {
 		fmt.Printf("%s: %s\n", value.Name, value.Description)
 	}
+
+	fmt.Println()
 }
