@@ -13,6 +13,8 @@ func main() {
 
 	commands := cmd.GetCommands()
 
+	config := cmd.GetConfig()
+
 	for {
 		fmt.Print("pokedex > ")
 
@@ -21,7 +23,7 @@ func main() {
 		input := scanner.Text()
 
 		if cmd, ok := commands[input]; ok {
-			cmd.Callback()
+			cmd.Callback(&config)
 		}
 
 	}

@@ -2,7 +2,7 @@ package cmd
 
 import "fmt"
 
-func commandHelp() {
+func commandHelp(config *config) {
 	commandMap := GetCommands()
 	fmt.Printf("\nWelcome to the Pokedex!\nUsage:\n\n")
 

@@ -2,6 +2,6 @@ package cmd
 
 import "os"
 
-func commandExit() {
+func commandExit(config *config) {
 	os.Exit(0)
 }
