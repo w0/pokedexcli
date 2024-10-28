@@ -1,5 +1,7 @@
 package cmd
 
+import "github.com/w0/pokedexcli/internal/pokecache"
+
 type config struct {
 	NextLocation     *string
 	PreviousLocation *string
@@ -8,7 +10,7 @@ type config struct {
 type cliCommand struct {
 	Name        string
 	Description string
-	Callback    func(*config)
+	Callback    func(*config, *pokecache.Cache, *string)
 }
 
 func GetCommands() map[string]cliCommand {
@@ -32,6 +34,11 @@ func GetCommands() map[string]cliCommand {
 			Name:        "mapb",
 			Description: "Displays 20 previous areas in the Pokemon World.",
 			Callback:    commandMapb,
+		},
+		"explore": {
+			Name:        "explore",
+			Description: "Explore the specified area for Pokemon!",
+			Callback:    commandExplore,
 		},
 	}
 }

@@ -1,8 +1,12 @@
 package cmd
 
-import "fmt"
+import (
+	"fmt"
 
-func commandHelp(config *config) {
+	"github.com/w0/pokedexcli/internal/pokecache"
+)
+
+func commandHelp(config *config, cache *pokecache.Cache, param *string) {
 	commandMap := GetCommands()
 	fmt.Printf("\nWelcome to the Pokedex!\nUsage:\n\n")
 
