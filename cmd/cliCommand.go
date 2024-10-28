@@ -1,8 +1,13 @@
 package cmd
 
-import "github.com/w0/pokedexcli/internal/pokecache"
+import (
+	"github.com/w0/pokedexcli/internal/pokeapi"
+	"github.com/w0/pokedexcli/internal/pokecache"
+)
 
 type config struct {
+	CatchAttempt     int
+	Pokemon          map[string]pokeapi.Pokemon
 	NextLocation     *string
 	PreviousLocation *string
 }
@@ -40,9 +45,17 @@ func GetCommands() map[string]cliCommand {
 			Description: "Explore the specified area for Pokemon!",
 			Callback:    commandExplore,
 		},
+		"catch": {
+			Name:        "catch",
+			Description: "Catch a Pokemon",
+			Callback:    commandCatch,
+		},
 	}
 }
 
 func GetConfig() config {
-	return config{}
+	return config{
+		CatchAttempt: 1,
+		Pokemon:      make(map[string]pokeapi.Pokemon),
+	}
 }
