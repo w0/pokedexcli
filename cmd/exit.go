@@ -2,10 +2,8 @@ package cmd
 
 import (
 	"os"
-
-	"github.com/w0/pokedexcli/internal/pokecache"
 )
 
-func commandExit(config *config, cache *pokecache.Cache, param *string) {
+func commandExit(config *config, name ...string) {
 	os.Exit(0)
 }

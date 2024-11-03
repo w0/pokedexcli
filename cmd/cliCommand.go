@@ -1,11 +1,13 @@
 package cmd
 
 import (
+	"time"
+
 	"github.com/w0/pokedexcli/internal/pokeapi"
-	"github.com/w0/pokedexcli/internal/pokecache"
 )
 
 type config struct {
+	Client           pokeapi.Client
 	CatchAttempt     int
 	Pokemon          map[string]pokeapi.Pokemon
 	NextLocation     *string
@@ -15,7 +17,7 @@ type config struct {
 type cliCommand struct {
 	Name        string
 	Description string
-	Callback    func(*config, *pokecache.Cache, *string)
+	Callback    func(*config, ...string)
 }
 
 func GetCommands() map[string]cliCommand {
@@ -65,7 +67,8 @@ func GetCommands() map[string]cliCommand {
 
 func GetConfig() config {
 	return config{
-		CatchAttempt: 1,
+		CatchAttempt: 0,
 		Pokemon:      make(map[string]pokeapi.Pokemon),
+		Client:       pokeapi.NewClient(5*time.Second, 5*time.Minute),
 	}
 }

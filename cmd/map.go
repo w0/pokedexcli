@@ -2,14 +2,10 @@ package cmd
 
 import (
 	"fmt"
-
-	"github.com/w0/pokedexcli/internal/pokeapi"
-	"github.com/w0/pokedexcli/internal/pokecache"
 )
 
-func commandMap(config *config, cache *pokecache.Cache, param *string) {
-	locations, err := pokeapi.GetLocations(config.NextLocation, cache)
-
+func commandMap(config *config, location ...string) {
+	locations, err := config.Client.GetLocations(config.NextLocation)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -23,8 +19,8 @@ func commandMap(config *config, cache *pokecache.Cache, param *string) {
 	}
 }
 
-func commandMapb(config *config, cache *pokecache.Cache, param *string) {
-	locations, err := pokeapi.GetLocations(config.PreviousLocation, cache)
+func commandMapb(config *config, location ...string) {
+	locations, err := config.Client.GetLocations(config.PreviousLocation)
 
 	if err != nil {
 		fmt.Println(err)

@@ -5,10 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"time"
 
 	"github.com/w0/pokedexcli/cmd"
-	"github.com/w0/pokedexcli/internal/pokecache"
 )
 
 func main() {
@@ -17,8 +15,6 @@ func main() {
 	commands := cmd.GetCommands()
 
 	config := cmd.GetConfig()
-
-	cache := pokecache.NewCache(5 * time.Second)
 
 	for {
 		fmt.Print("pokedex > ")
@@ -29,16 +25,8 @@ func main() {
 
 		things := strings.Split(input, " ")
 
-		junk := ""
-
-		if len(things) == 1 {
-			junk = ""
-		} else {
-			junk = things[1]
-		}
-
 		if cmd, ok := commands[things[0]]; ok {
-			cmd.Callback(&config, &cache, &junk)
+			cmd.Callback(&config, things...)
 		}
 
 	}

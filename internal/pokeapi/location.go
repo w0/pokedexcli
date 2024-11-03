@@ -3,9 +3,6 @@ package pokeapi
 import (
 	"encoding/json"
 	"io"
-	"net/http"
-
-	"github.com/w0/pokedexcli/internal/pokecache"
 )
 
 type Locations struct {
@@ -27,14 +24,14 @@ type LocationPokemon struct {
 	} `json:"pokemon_encounters"`
 }
 
-func GetLocations(URL *string, cache *pokecache.Cache) (Locations, error) {
+func (c *Client) GetLocations(URL *string) (Locations, error) {
 	reqURL := pokeapi_base + "/location-area"
 
 	if URL != nil {
 		reqURL = *URL
 	}
 
-	if val, ok := cache.Get(reqURL); ok {
+	if val, ok := c.cache.Get(reqURL); ok {
 		loc := Locations{}
 		err := json.Unmarshal(val, &loc)
 
@@ -45,7 +42,7 @@ func GetLocations(URL *string, cache *pokecache.Cache) (Locations, error) {
 		return loc, nil
 	}
 
-	res, err := http.Get(reqURL)
+	res, err := c.httpClient.Get(reqURL)
 
 	if err != nil {
 		return Locations{}, err
@@ -59,7 +56,7 @@ func GetLocations(URL *string, cache *pokecache.Cache) (Locations, error) {
 		return Locations{}, err
 	}
 
-	cache.Add(reqURL, reqBody)
+	c.cache.Add(reqURL, reqBody)
 
 	loc := Locations{}
 	err = json.Unmarshal(reqBody, &loc)
@@ -72,10 +69,10 @@ func GetLocations(URL *string, cache *pokecache.Cache) (Locations, error) {
 
 }
 
-func GetLocationDetail(param string, cache *pokecache.Cache) (LocationPokemon, error) {
-	reqURL := pokeapi_base + "/location-area/" + param
+func (c *Client) GetLocationDetail(location string) (LocationPokemon, error) {
+	reqURL := pokeapi_base + "/location-area/" + location
 
-	res, err := http.Get(reqURL)
+	res, err := c.httpClient.Get(reqURL)
 
 	if err != nil {
 		return LocationPokemon{}, err
@@ -88,7 +85,7 @@ func GetLocationDetail(param string, cache *pokecache.Cache) (LocationPokemon, e
 		return LocationPokemon{}, err
 	}
 
-	cache.Add(reqURL, reqBody)
+	c.cache.Add(reqURL, reqBody)
 
 	mons := LocationPokemon{}
 

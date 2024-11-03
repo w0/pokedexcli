@@ -4,11 +4,11 @@ import (
 	"fmt"
 
 	"github.com/w0/pokedexcli/internal/pokeapi"
-	"github.com/w0/pokedexcli/internal/pokecache"
 )
 
-func commandCatch(config *config, cache *pokecache.Cache, name *string) {
-	pokemon, err := pokeapi.CatchPokemon(*name)
+func commandCatch(config *config, name ...string) {
+
+	pokemon, err := config.Client.CatchPokemon(name[1])
 
 	if err != nil {
 		fmt.Println(err)

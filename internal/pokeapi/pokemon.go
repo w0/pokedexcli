@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"io"
 	"math/rand/v2"
-	"net/http"
 )
 
 type Pokemon struct {
@@ -279,10 +278,10 @@ type Pokemon struct {
 	} `json:"past_types"`
 }
 
-func CatchPokemon(name string) (Pokemon, error) {
+func (c *Client) CatchPokemon(name string) (Pokemon, error) {
 	reqURL := pokeapi_base + "/pokemon/" + name
 
-	res, err := http.Get(reqURL)
+	res, err := c.httpClient.Get(reqURL)
 
 	if err != nil {
 		return Pokemon{}, err

@@ -2,12 +2,10 @@ package cmd
 
 import (
 	"fmt"
-
-	"github.com/w0/pokedexcli/internal/pokecache"
 )
 
-func commandInspect(config *config, cache *pokecache.Cache, name *string) {
-	if val, ok := config.Pokemon[*name]; ok {
+func commandInspect(config *config, name ...string) {
+	if val, ok := config.Pokemon[name[1]]; ok {
 		fmt.Printf("Name: %s\n", val.Name)
 		fmt.Printf("Height: %d\n", val.Height)
 		fmt.Printf("Weight: %d\n", val.Weight)
